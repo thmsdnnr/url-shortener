@@ -46,11 +46,11 @@ else { res.redirect(data.url); res.end();}
 });
 }});});
 
-app.get('/submit/:addy', function(req,res) {
-if (validURL.isUri(req.params.addy)) {
-addUrl(req.params.addy,function(encID){
+app.get('/submit/*', function(req,res) {
+if (validURL.isUri(req.params[0])) {
+addUrl(req.params[0],function(encID){
 //JSON response:
-res.send({"original_url":req.params.addy,"short_url":'https://uri-shorty.herokuapp.com/'+encID});
+res.send({"original_url":req.params[0],"short_url":'https://uri-shorty.herokuapp.com/'+encID});
 //verbose repsonse: (i.e., non-JSON) res.send('Your shortened URL is <a href="https://uri-shorty.herokuapp.com/'+encID+'">https://uri-shorty.herokuapp.com/'+encID+'</a>. looks good brah!');
 });}
 else { res.send({"error":"Invalid URL. Please check your format and try again."}); } //invalid URL
