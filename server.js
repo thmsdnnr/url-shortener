@@ -41,23 +41,19 @@ app.use(bodyParser.json());
 app.get('/:addy',function(req,res) { 
 mongo.connect(db_url, function(err, db) { if(!err) {
 db.collection('addrz').findOne({'shrt':req.params.addy}, function(err,data) {
-if(data==null){res.send(req.params.addy+ ' is not a valid shortened URL. Please try again.');}
-else {
-console.log(data.url);
-res.redirect(data.url);
-res.end();}
+if(data==null){res.send({"error":req.params.addy+ ' is not a valid shortened URL. Please try again.'});}
+else { res.redirect(data.url); res.end();}
 });
 }});});
 
-app.post('/submit', function(req,res) {
-if (validURL.isUri(req.body.url)) {
-var output='Your shortened URL is https://uri-shorty.herokuapp.com/';
-addUrl(req.body.url,function(encID){
-res.send('Your shortened URL is <a href="https://uri-shorty.herokuapp.com/'+encID+'">https://uri-shorty.herokuapp.com/'+encID+'</a>. looks good brah!');});}
-else { //invalid URL...add some kind of client-side alert
-res.redirect('/'); }
-//res.end();
-//}
+app.get('/submit/:addy', function(req,res) {
+if (validURL.isUri(req.params.addy)) {
+addUrl(req.params.addy,function(encID){
+//JSON response:
+res.send({"original_url":req.params.addy,"short_url":'https://uri-shorty.herokuapp.com/'+encID});
+//verbose repsonse: (i.e., non-JSON) res.send('Your shortened URL is <a href="https://uri-shorty.herokuapp.com/'+encID+'">https://uri-shorty.herokuapp.com/'+encID+'</a>. looks good brah!');
+});}
+else { res.send({"error":"Invalid URL. Please check your format and try again."}); } //invalid URL
 });
 app.get('*', function(req,res){res.sendFile(path.join(__dirname, 'index.html'));});
 app.listen(process.env.PORT||8080,function(){console.log('sup brah im listening brah');});
