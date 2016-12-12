@@ -51,8 +51,9 @@ res.end();}
 
 app.post('/submit', function(req,res) {
 if (validURL.isUri(req.body.url)) {
-var output='Your shortened URL is https://fcc-urlshortener-thmsdnnr.c9users.io/';
-addUrl(req.body.url,function(encID){res.send(output+encID+'. looks good brah');});}
+var output='Your shortened URL is https://uri-shorty.herokuapp.com/';
+addUrl(req.body.url,function(encID){
+res.send('Your shortened URL is <a href="https://uri-shorty.herokuapp.com/'+encID+'">https://uri-shorty.herokuapp.com/'+encID+'</a>. looks good brah!');});}
 else { //invalid URL...add some kind of client-side alert
 res.redirect('/'); }
 //res.end();
