@@ -3,10 +3,11 @@
 <title>url shortener service</title>
 </head>
 <body>
-<form action="/submit" method="post">
-<input type="text" name="url">
-<label for="url">Enter a URL to shorten. Please include http:// or https:// as well as the www. Hint: if nothing happens, your format is incorrect. Please check your format and correct before submitting again.</label>
-<input type="submit" value="submit">
-</form>
+<h1>URL Shortener Microservice</h1>
+<h2>Usage:</h2>
+<p>To access a shortened URL: https://uri-shorty.herokuapp.com/[SHORTENED URL]<br />
+To enter a new URL to be shortened: https://uri-shorty.herokuapp.com/submit/[URL TO BE SHORTENED]</p>
+<em><p>Note that the shortened URL must be in the correct format (beginning with http or https followed by ://www. and ending in a .(2-3 letters) suffix) to be accepted. Otherwise an error will be displayed.</p></em>
+<p>Output format: JSON object {"original_url":original URL,"short_url":short URL}</p>
 </body>
 </html>
