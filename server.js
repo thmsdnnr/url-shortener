@@ -32,7 +32,6 @@ callB(data.shrt);
 var express=require('express');
 var path=require('path');
 var bodyParser=require('body-parser');
-var validURL=require('valid-url');
 var app=express();
 app.use(express.static('/'));
 app.use(bodyParser.urlencoded({extended:true}));
@@ -47,7 +46,7 @@ else { res.redirect(data.url); res.end();}
 }});});
 
 app.get('/submit/*', function(req,res) {
-if (validURL.isUri(req.params[0])) {
+if (req.params[0].match(/^((http|https):\/\/www\.).*\.[A-Za-z]{2,3}$/)) { //basic validation for URL, not totally extensive
 addUrl(req.params[0],function(encID){
 //JSON response:
 res.send({"original_url":req.params[0],"short_url":'https://uri-shorty.herokuapp.com/'+encID});
