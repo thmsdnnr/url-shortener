@@ -1,12 +1,5 @@
 var mongo=require('mongodb').MongoClient;
-var http=require('http');
-var io=require('socket.io')(http);
-var dbAddress='urlshort';
-var db_url='mongodb://localhost:27017/';
-
-//URL shortener code courtesy of github.com/delight-im/ShortURL
-var _alphabet = '23456789bcdfghjkmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ-_',
-_base = _alphabet.length;
+var db_url=process.env.PROD_DB||'mongodb://localhost:27017/';
 
 function encode(number) { //convert number to base-62
 var _alphabet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
